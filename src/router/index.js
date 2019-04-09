@@ -14,6 +14,13 @@ const router =  new Router({
 // router gards
 router.beforeEach((to, from, next) => {
   NProgress.start();
+  const publicPages = ['/login'];
+  const authRequired = !publicPages.includes(to.path);
+  const loggedIn = localStorage.getItem('user');
+
+  if (authRequired && !loggedIn) {
+    return next('/login');
+  }
   next();
 });
 

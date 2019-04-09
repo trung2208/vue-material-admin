@@ -9,7 +9,10 @@ import './theme/default.styl';
 import VeeValidate from 'vee-validate';
 import colors from 'vuetify/es5/util/colors';
 import Truncate from 'lodash.truncate';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 Vue.config.productionTip = false;
+Vue.use(VueAxios, axios);
 // Helpers
 // Global filters
 Vue.filter('truncate', Truncate);
