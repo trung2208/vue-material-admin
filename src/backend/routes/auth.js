@@ -12,4 +12,4 @@ var express = require("express");
 var router = express.Router();
 var controller = require("../controllers/authCtrl");
 module.exports = router;
-// router.post("/login", controller.login);
+ router.post("/isAuthorzied", controller.isAuthenticated);

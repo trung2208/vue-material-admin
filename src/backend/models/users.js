@@ -61,7 +61,7 @@ module.exports = (sequelize, type) => {
     }
   ); 
   User.prototype.toPublicJSON = function() {
-    var json = User.toJSON();
+    var json = this.toJSON();
     return _.pick(json, "id", "email", "createdAt", "updatedAt");
   };
   User.prototype.passwordIsValid = function(password) {

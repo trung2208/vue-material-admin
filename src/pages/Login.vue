@@ -74,11 +74,11 @@ export default {
             self.$router.push("/dashboard");
           } else {
             self.loading = false;
-            console.log("not login");
+            //console.log("not login");
           }
         })
         .catch(function(error) {
-          console.log(error);
+        //  console.log(error);
         });
     }
   }

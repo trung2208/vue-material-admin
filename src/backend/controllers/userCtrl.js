@@ -57,3 +57,7 @@ exports.login = function(req, res) {
 exports.logout = function(req, res) {
   res.json({ data: "logout" });
 };
+exports.getUser=function(req,res){
+  
+  res.json(req.user);
+}

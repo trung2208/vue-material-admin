@@ -39,7 +39,8 @@ var config = require("../util/config");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
-exports.isAuthenticated = function(req, res, next) {
+exports.isAuthenticated = function(req, res, next=undefined) {
+  console.log(req.headers.authorization);
   if (
     req.headers &&
     req.headers.authorization &&
@@ -48,7 +49,9 @@ exports.isAuthenticated = function(req, res, next) {
     var jwtToken = req.headers.authorization.split(" ")[1];
     jwt.verify(jwtToken, config.jwtSecret, function(err, payload) {
       if (err) {
-        res.status(401).json({ message: "Unauthorized user!" ,err:err.message});
+        res
+          .status(401)
+          .json({ message: "Unauthorized user!", err: err.message });
       } else {
         console.log("decoder: " + payload.username);
         // find
@@ -59,14 +62,18 @@ exports.isAuthenticated = function(req, res, next) {
         })
           .then(user => {
             if (user) {
-              req.user = user;
+              //console.log(user.toPublicJSON());
+              req.user = user.toPublicJSON();
+              console.log("user:"+JSON.stringify(req.user));
               next();
             } else {
               res.status(401).json({ message: "Unauthorized user!" });
             }
           })
           .catch(function(err) {
-            res.status(401).json({ message: "Unauthorized user!",err:err.message });
+            res
+              .status(401)
+              .json({ message: "Unauthorized user!", err: err.message });
           });
       }
     });
