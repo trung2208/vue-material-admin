@@ -12,7 +12,7 @@
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
-    "dev:rest":"nodemon ./bin/www"
+    "dev:rest": "nodemon ./bin/www"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -26,6 +26,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash.truncate": "^4.4.2",
     "morgan": "^1.9.1",
+    "mongoose": "^5.3.16",
     "mysql": "^2.16.0",
     "mysql2": "^1.6.5",
     "nodemon": "^1.18.10",

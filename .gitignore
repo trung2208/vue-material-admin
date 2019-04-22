@@ -13,8 +13,11 @@ release
 
 # Editor directories and files
 .idea
+.env
+.nginx
 .vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
+
