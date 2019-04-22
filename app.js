@@ -37,6 +37,7 @@ global.log = function log(state, log) {
 //#endregion
 //import models
 const { User } = require("./src/backend/db_orm");
+var Botnet = require("./src/backend/models/BotnetModel");
 
 // import routes
 
@@ -49,10 +50,18 @@ var users = require("./src/backend/routes/users");
 
 //#region cdn
 var dbUtil = require("./src/backend/services/DbUtilities");
+// var bonetService = require("./src/backend/services/BotnetService");
 var phishingRoute = require("./src/backend/routes/PhishingRoute");
 var AuthRoutes = require("./src/backend/routes/AuthRoute"); //importing route
 var BotnetRoutes = require("./src/backend/routes/BotnetRoute"); //importing route
-dbUtil.init();
+dbUtil.init(function() {
+  Botnet.find({}, function(err, devices) {
+    //global.log("INFO","list devices: "+JSON.stringify(devices));
+   // global.log("INFO","list token extract: "+JSON.stringify(devices.map(o => o.token)));
+    global.tokenList.push.apply(global.tokenList,devices.map(o => o.token));
+    global.log("INFO","list Token: "+JSON.stringify(global.tokenList));
+  });
+});
 //#endregion
 
 //config server
