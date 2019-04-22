@@ -61,7 +61,7 @@ exports.collectData = function(req, res) {
         // log("INFO",JSON.stringify(devices));
         if ( device != undefined ) {
           data.updated = Date.now();
-          date = Object.assign(device, data);
+          data = Object.assign(device, data);
           service.save(data);
           var result = {
             status: true
