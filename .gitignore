@@ -9,6 +9,7 @@ yarn-error.log*
 selenium-debug.log
 node_modules
 release
+dist
 /src/backend/util/config.js
 
 # Editor directories and files
